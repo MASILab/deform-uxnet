@@ -1,7 +1,0 @@
-# ninja log v5
-3	29012	1687213773674312482	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/cpu/deform_cpu.o	3a8c593833a9974d
-4	44413	1687213789055316933	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/vision.o	36b38d9764466a91
-4	85737	1687213830404328900	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/cuda/deform_conv_cuda.o	d1fc6918f7e1d5a6
-25436	96602	1687295100604100677	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/cpu/deform_cpu.o	52e1d08d97e70f7e
-25437	114723	1687295118682101899	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/vision.o	e73e047b23cbb6f6
-25436	130721	1687295134738102984	/nfs/masi/leeh43/deformuxnet/dcn/build/temp.linux-x86_64-cpython-38/nfs/masi/leeh43/deformuxnet/dcn/src/cuda/deform_conv_cuda.o	c26ee188b4b64086
