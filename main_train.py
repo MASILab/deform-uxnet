@@ -11,6 +11,7 @@ from monai.transforms import AsDiscrete
 from networks.UXNet_3D.network_backbone import UXNET
 from networks.RepUXNet_3D.network_backbone import REPUXNET
 from networks.DeformUXNet_3D.network_backbone import DEFORMUXNET
+from networks.UNesT.unest_base_patch_4 import UNesT
 from monai.networks.nets import UNETR, SwinUNETR
 from networks.nnFormer.nnFormer_seg import nnFormer
 from networks.TransBTS.TransBTS_downsample8x_skipconnection import TransBTS
@@ -35,7 +36,7 @@ parser.add_argument('--output', type=str, default='', required=True, help='Outpu
 parser.add_argument('--dataset', type=str, default='flare', required=True, help='Datasets: {feta, flare, amos}, Fyi: You can add your dataset here')
 
 ## Input model & training hyperparameters
-parser.add_argument('--network', type=str, default='REPUXNET', help='Network models: {TransBTS, nnFormer, UNETR, SwinUNETR, 3DUXNET}')
+parser.add_argument('--network', type=str, default='DEFORMUXNET', help='Network models: {TransBTS, nnFormer, UNETR, SwinUNETR, 3DUXNET, REPUXNET, UNEST, DEFORMUXNET}')
 parser.add_argument('--mode', type=str, default='train', help='Training or testing mode')
 parser.add_argument('--pretrain', default=False, help='Have pretrained weights or not')
 parser.add_argument('--pretrained_weights', default='', help='Path of pretrained weights')
@@ -111,6 +112,15 @@ elif args.network == 'REPUXNET':
             layer_scale_init_value=1e-6,
             spatial_dims=3,
             deploy=False
+    ).to(device)
+elif args.network == 'UNEST':
+    model = UNesT(
+        in_channels=1,
+        out_channels=out_classes,
+        patch_size=4,
+        depths=[2,2,8],
+        num_heads=[4,8,16],
+        embed_dim=[128,256,512]
     ).to(device)
 elif args.network == '3DUXNET':
     model = UXNET(

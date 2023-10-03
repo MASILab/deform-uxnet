@@ -3,6 +3,7 @@ from monai.utils import first, set_determinism
 from monai.transforms import AsDiscrete
 from networks.UXNet_3D.network_backbone import UXNET
 from networks.RepUXNet_3D.network_backbone import REPUXNET
+from networks.DeformUXNet_3D.network_backbone import DEFORMUXNET
 from monai.networks.nets import UNETR, SwinUNETR
 from networks.nnFormer.nnFormer_seg import nnFormer
 from networks.TransBTS.TransBTS_downsample8x_skipconnection import TransBTS
@@ -22,7 +23,7 @@ parser.add_argument('--output', type=str, default='', required=True, help='Outpu
 parser.add_argument('--dataset', type=str, default='flare', required=True, help='Datasets: {feta, flare, amos}, Fyi: You can add your dataset here')
 
 ## Input model & training hyperparameters
-parser.add_argument('--network', type=str, default='REPUXNET', required=True, help='Network models: {TransBTS, nnFormer, UNETR, SwinUNETR, 3DUXNET}')
+parser.add_argument('--network', type=str, default='DEFORMUXNET', required=True, help='Network models: {TransBTS, nnFormer, UNETR, SwinUNETR, 3DUXNET, REPUXNET, UNEST, DEFORMUXNET}')
 parser.add_argument('--trained_weights', default='', required=True, help='Path of pretrained/fine-tuned weights')
 parser.add_argument('--mode', type=str, default='test', help='Training or testing mode')
 parser.add_argument('--sw_batch_size', type=int, default=4, help='Sliding window batch size for inference')
@@ -55,7 +56,17 @@ test_loader = DataLoader(test_ds, batch_size=1, num_workers=args.num_workers)
 
 ## Load Networks
 device = torch.device("cuda:0")
-if args.network == 'REPUXNET':
+if args.network == 'DEFORMUXNET':
+    model = DEFORMUXNET(
+        in_chans=1,
+        out_chans=out_classes,
+        depths=[2, 2, 2, 2],
+        feat_size=[48, 96, 192, 384],
+        drop_path_rate=0,
+        layer_scale_init_value=1e-6,
+        spatial_dims=3,
+    ).to(device)
+elif args.network == 'REPUXNET':
     model = REPUXNET(
             in_chans=1,
             out_chans=out_classes,
@@ -68,6 +79,15 @@ if args.network == 'REPUXNET':
             spatial_dims=3,
             deploy=True
             )
+elif args.network == 'UNEST':
+    model = UNesT(
+        in_channels=1,
+        out_channels=out_classes,
+        patch_size=4,
+        depths=[2,2,8],
+        num_heads=[4,8,16],
+        embed_dim=[128,256,512]
+    ).to(device)
 elif args.network == '3DUXNET':
     model = UXNET(
         in_chans=1,
