@@ -10,6 +10,7 @@ from monai.utils import set_determinism
 from monai.transforms import AsDiscrete
 from networks.UXNet_3D.network_backbone import UXNET
 from networks.RepUXNet_3D.network_backbone import REPUXNET
+from networks.DeformUXNet_3D.network_backbone import DEFORMUXNET
 from monai.networks.nets import UNETR, SwinUNETR
 from networks.nnFormer.nnFormer_seg import nnFormer
 from networks.TransBTS.TransBTS_downsample8x_skipconnection import TransBTS
@@ -88,7 +89,17 @@ val_loader = DataLoader(val_ds, batch_size=1, num_workers=args.num_workers)
 
 ## Load Networks
 device = torch.device("cuda:0")
-if args.network == 'REPUXNET':
+if args.network == 'DEFORMUXNET':
+    model = DEFORMUXNET(
+        in_chans=1,
+        out_chans=out_classes,
+        depths=[2, 2, 2, 2],
+        feat_size=[48, 96, 192, 384],
+        drop_path_rate=0,
+        layer_scale_init_value=1e-6,
+        spatial_dims=3,
+    ).to(device)
+elif args.network == 'REPUXNET':
     model = REPUXNET( 
             in_chans=1,
             out_chans=out_classes,                       

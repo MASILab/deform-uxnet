@@ -101,7 +101,7 @@ This project is released under the MIT license. Please see the [LICENSE](LICENSE
 If you find this repository helpful, please consider citing:
 ```
 @Article{lee2023scaling,
-  author  = {Lee, Ho Hin and Liu, Quan and Yang, Qi and Yu, Xin and Shunxing, Bao and Huo, Yuankai and Landman, Bennett A},
+  author  = {Lee, Ho Hin and Liu, Quan and Yang, Qi and Yu, Xin and Bao, Shunxing and Huo, Yuankai and Landman, Bennett A},
   title   = {DeformUX-Net: Exploring a 3D Foundation Backbone for Medical Image Segmentation with Depthwise Deformable Convolution},
   journal = {arXiv preprint arXiv:2310.00199},
   year    = {2023}
