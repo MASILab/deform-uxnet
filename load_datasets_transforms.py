@@ -39,10 +39,12 @@ def data_loader(args):
 
     print('Start to load data from directory: {}'.format(root_dir))
 
-    if dataset == 'feta':
-        out_classes = 8
-    elif dataset == 'flare':
-        out_classes = 5
+    if dataset == 'kits':
+        out_classes = 4
+    elif dataset == 'pancreas':
+        out_classes = 3
+    elif dataset == 'hepatic':
+        out_classes = 3
     elif dataset == 'amos':
         out_classes = 16
 
@@ -86,14 +88,14 @@ def data_transforms(args):
     else:
         crop_samples = None
 
-    if dataset == 'feta':
+    if dataset == 'pancreas' or dataset == 'kits':
         train_transforms = Compose(
             [
                 LoadImaged(keys=["image", "label"]),
                 AddChanneld(keys=["image", "label"]),
                 Orientationd(keys=["image", "label"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=0, a_max=1000,
+                    keys=["image"], a_min=-125, a_max=275,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image", "label"], source_key="image"),
@@ -128,7 +130,7 @@ def data_transforms(args):
                 AddChanneld(keys=["image", "label"]),
                 Orientationd(keys=["image", "label"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=0, a_max=1000,
+                    keys=["image"], a_min=-125, a_max=275,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image", "label"], source_key="image"),
@@ -142,7 +144,7 @@ def data_transforms(args):
                 AddChanneld(keys=["image"]),
                 Orientationd(keys=["image"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=0, a_max=1000,
+                    keys=["image"], a_min=-125, a_max=275,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image"], source_key="image"),
@@ -150,7 +152,7 @@ def data_transforms(args):
             ]
         )
 
-    elif dataset == 'flare':
+    elif dataset == 'hepatic':
         train_transforms = Compose(
             [
                 LoadImaged(keys=["image", "label"]),
@@ -160,7 +162,7 @@ def data_transforms(args):
                 # ResizeWithPadOrCropd(keys=["image", "label"], spatial_size=(256,256,128), mode=("constant")),
                 Orientationd(keys=["image", "label"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=-125, a_max=275,
+                    keys=["image"], a_min=0, a_max=230,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image", "label"], source_key="image"),
@@ -197,7 +199,7 @@ def data_transforms(args):
                     1.0, 1.0, 1.2), mode=("bilinear", "nearest")),
                 Orientationd(keys=["image", "label"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=-125, a_max=275,
+                    keys=["image"], a_min=0, a_max=230,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image", "label"], source_key="image"),
@@ -214,7 +216,7 @@ def data_transforms(args):
                 # ResizeWithPadOrCropd(keys=["image"], spatial_size=(168,168,128), mode=("constant")),
                 Orientationd(keys=["image"], axcodes="RAS"),
                 ScaleIntensityRanged(
-                    keys=["image"], a_min=-125, a_max=275,
+                    keys=["image"], a_min=0, a_max=230,
                     b_min=0.0, b_max=1.0, clip=True,
                 ),
                 CropForegroundd(keys=["image"], source_key="image"),

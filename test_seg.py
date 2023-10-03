@@ -16,11 +16,11 @@ from load_datasets_transforms import data_loader, data_transforms, infer_post_tr
 import os
 import argparse
 
-parser = argparse.ArgumentParser(description='3D RepUX-Net inference hyperparameters for medical image segmentation')
+parser = argparse.ArgumentParser(description='3D DeformUX-Net inference hyperparameters for medical image segmentation')
 ## Input data hyperparameters
 parser.add_argument('--root', type=str, default='', required=True, help='Root folder of all your images and labels')
 parser.add_argument('--output', type=str, default='', required=True, help='Output folder for both tensorboard and the best model')
-parser.add_argument('--dataset', type=str, default='flare', required=True, help='Datasets: {feta, flare, amos}, Fyi: You can add your dataset here')
+parser.add_argument('--dataset', type=str, default='amos', required=True, help='Datasets: {amos, kits, pancreas, hepatic}, Fyi: You can add your dataset here')
 
 ## Input model & training hyperparameters
 parser.add_argument('--network', type=str, default='DEFORMUXNET', required=True, help='Network models: {TransBTS, nnFormer, UNETR, SwinUNETR, 3DUXNET, REPUXNET, UNEST, DEFORMUXNET}')
